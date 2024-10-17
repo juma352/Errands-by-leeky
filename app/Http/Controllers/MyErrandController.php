@@ -94,11 +94,10 @@ class MyErrandController extends Controller
      */
     public function destroy(Errand $my_errand)
     {
-        if (! Gate::allows('delete', $my_errand)) {
-            abort(403); // or handle unauthorized access in your way
-        }
         $my_errand->delete();
-        return redirect()->route('my-errands.index')
-        ->with('success', 'Errand deleted');
+
+        return redirect()->route('my-jobs.index')
+            ->with('success', 'Job deleted.');
     }
 }
+        

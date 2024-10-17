@@ -51,9 +51,8 @@ Route::middleware('auth')->group(function() {
     ]);
 
     // Reports
-    Route::resource('reports', ReportController::class)->names([
-        'index' => 'reports.index',
-        'show' => 'reports.show',
-        'errandsApplied' => 'reports.errands_applied',
-    ]);
+
+    Route::resource('reports', ReportController::class);
+
+    Route::get('/reports/errands-applied', [ReportController::class, 'errandsApplied'])->name('reports.errands_applied');
 });
