@@ -20,30 +20,25 @@ class AuthController extends Controller
     {
         // Validate the request data
         $validatedData = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed',
-            'password_confirmation' => 'required',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
         ]);
-        dd($validatedData);
-
-        // Create a new user
+    
+        // Create the user
         $user = User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
         ]);
-        dd($user);
-        
-        
-
-
+    
         // Log the user in
-        auth()->login($user);
-
-        // Redirect the user to the dashboard
-        return redirect()->route('errands.index')
-        ->with('success', 'User created successfully');
+        Auth::login($user);
+        // Add a success message
+    session()->flash('success', 'Registration successful! Welcome to our application.');
+    
+        // Redirect to a desired location
+        return redirect()->route('login');
     }
 
     public function login(Request $request)

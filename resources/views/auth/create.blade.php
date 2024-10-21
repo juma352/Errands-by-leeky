@@ -1,7 +1,7 @@
 <x-layout>
     <h1 class="my-16 text-center text-4xl font-medium text-slate-600">Create an account</h1>
     <x-card class="py-8 px-16">
-        <form action="{{ route('login.store') }}" method="POST">
+        <form action="{{ route('auth.store') }}" method="POST">
             @csrf
             <div class="mb-8">
                 <x-label for="name" :required="true">Name</x-label>

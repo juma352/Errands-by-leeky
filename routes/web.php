@@ -5,6 +5,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ErrandApplicationController;
 use App\Http\Controllers\ErrandController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MyErrandApplicationController;
 use App\Http\Controllers\MyErrandController;
 use Illuminate\Support\Facades\Route;
@@ -12,8 +13,9 @@ use App\Http\Controllers\UserController;
 
 // Guest routes
 // Guest routes
-Route::get('', fn()=> to_route('errands.index'));
-Route::match(['get', 'post'], 'auth/create', [AuthController::class, 'create'])->name('auth.create');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('auth/create', [AuthController::class, 'create'])->name('auth.create');
+Route::post('auth/store', [AuthController::class, 'store'])->name('auth.store');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 
 Route::post('/login', [AuthController::class, 'login'])->name('login.store');
