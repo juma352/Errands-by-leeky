@@ -6,6 +6,7 @@ use App\Models\errand;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
+use App\Models\ErrandApplication;
 
 class ErrandApplicationController extends Controller
 {
@@ -77,4 +78,36 @@ class ErrandApplicationController extends Controller
     {
         //
     }
+    public function download()
+    {
+        // Fetch the errand applications data
+        $applications = ErrandApplication::all();
+
+        // Create a CSV file from the applications data
+        $csvFileName = 'errand_applications_report.csv';
+        $handle = fopen('php://output', 'w');
+
+        // Set the headers for the download
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="' . $csvFileName . '"');
+
+        // Add CSV header
+        fputcsv($handle, ['Title', 'Location', 'Phone Number', 'Salary', 'Description', 'Status']);
+
+        // Add each application to the CSV
+        foreach ($applications as $application) {
+            fputcsv($handle, [
+                $application->title,
+                $application->location,
+                $application->phone_number,
+                $application->salary,
+                $application->description,
+                $application->status,
+            ]);
+        }
+
+        fclose($handle);
+        exit();
+    }
 }
+

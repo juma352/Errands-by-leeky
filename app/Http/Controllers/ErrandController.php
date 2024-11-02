@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\errand;
+use App\Models\Errand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -13,7 +13,7 @@ class ErrandController extends Controller
      */
     public function index()
     {
-        Gate::authorize('viewAny',errand::class);
+        Gate::authorize('viewAny', Errand::class);
         $filters = request()->only(
             'search',
             'min_salary',
@@ -24,7 +24,7 @@ class ErrandController extends Controller
 
         return view(
             'errands.index',
-            ['errands' => errand::with('customer')->latest()->filter($filters)->get()]
+            ['errands' => Errand::with('customer')->latest()->filter($filters)->paginate(10)]
         );
     }
 
@@ -33,7 +33,8 @@ class ErrandController extends Controller
      */
     public function create()
     {
-        //
+        Gate::authorize('create', Errand::class);
+        return view('errands.create');
     }
 
     /**
@@ -41,7 +42,16 @@ class ErrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Gate::authorize('create', Errand::class);
+        $request->validate([
+            // Add validation rules here
+        ]);
+
+        $errand = new Errand();
+        $errand->fill($request->all());
+        $errand->save();
+
+        return redirect()->route('errands.index')->with('success', 'Errand created successfully.');
     }
 
     /**
@@ -49,7 +59,7 @@ class ErrandController extends Controller
      */
     public function show(Errand $errand)
     {
-        Gate::authorize('view',$errand);
+        Gate::authorize('view', $errand);
         return view(
             'errands.show',
             ['errand' => $errand->load('customer.errands')]
@@ -59,24 +69,47 @@ class ErrandController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Errand $errand)
     {
-        //
+        Gate::authorize('update', $errand);
+        return view('errands.edit', ['errand' => $errand]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Errand $errand)
     {
-        //
+        Gate::authorize('update', $errand);
+        $request->validate([
+            // Add validation rules here
+        ]);
+
+        $errand->fill($request->all());
+        $errand->save();
+
+        return redirect()->route('errands.index')->with('success', 'Errand updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Errand $errand)
     {
-        //
+        Gate::authorize('delete', $errand);
+        $errand->delete();
+
+        return redirect()->route('errands.index')->with('success', 'Errand deleted successfully.');
     }
+
+    /**
+     * Show the status of the specified resource.
+     */
+    public function report()
+{
+    $pendingErrands = Errand::where('status', 'pending')->get();
+    $completedErrands = Errand::where('status', 'complete')->get();
+
+    return view('errands.report',compact('pendingErrands', 'completedErrands'));
+}
 }

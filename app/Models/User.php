@@ -55,4 +55,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(ErrandApplication::class);
     }
+
+    /**
+     * Get the email address that should be used for notifications.
+     *
+     * @return string
+     */
+    public function routeNotificationForMail()
+    {
+        return 'jumaleon58@gmail.com'; // Hardcoded email address for notifications
+    }
 }

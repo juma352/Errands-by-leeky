@@ -31,7 +31,12 @@
               @endif
             </div>
           </div>
-          <div>
+          <div class="flex items-center">
+              <!-- Status Button -->
+  <a href="{{ route('my-errand-applications.status', $application) }}" class="mr-2">
+    <x-button>Status</x-button>
+  </a>
+            
             <form action="{{route('my-errand-applications.destroy', $application)}}" method="POST">
               @csrf
               @method('DELETE')
@@ -43,13 +48,12 @@
     @endif
   @empty
   <div class="rounded-md border border-dashed border-slate-300 p-8">
-<div class="text-center font-medium">
-  No errands application yet
-
-</div>
-<div class="text-center">
-Go find some jobs <a class="text-indigo-500 hover:underline" href="{{route('errands.index')}}">here!</a>
-</div>
+    <div class="text-center font-medium">
+      No errands application yet
+    </div>
+    <div class="text-center">
+      Go find some jobs <a class="text-indigo-500 hover:underline" href="{{route('errands.index')}}">here!</a>
+    </div>
   </div>
   @endforelse
 </x-layout>

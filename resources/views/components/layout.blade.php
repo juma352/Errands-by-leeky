@@ -24,11 +24,7 @@
                 </li>
                 <li>
                     <a href="{{route('my-errands.index')}}" class="text-gray-700 hover:text-blue-500">My Errands</a>
-                </li>
-                <li>
-                    <a href="{{route('reports.index')}}" class="text-gray-700 hover:text-blue-500">Reports</a>
-                </li>
-                <li>
+               <li>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="text-gray-700 hover:text-red-500">Logout</button>
