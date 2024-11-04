@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('phone_number')->nullable(); // Remove auto_increment and default value
             $table->string('location');
             $table->string('category');
+            $table->string('status')->default('in_progress');
             $table->enum('experience', errand::$experience);
             $table->timestamps();
         });

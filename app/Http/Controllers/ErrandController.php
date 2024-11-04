@@ -106,10 +106,31 @@ class ErrandController extends Controller
      * Show the status of the specified resource.
      */
     public function report()
-{
-    $pendingErrands = Errand::where('status', 'pending')->get();
-    $completedErrands = Errand::where('status', 'complete')->get();
+    {
+        $pendingErrands = Errand::where('status', 'pending')->get();
+        $completedErrands = Errand::where('status', 'complete')->get();
 
-    return view('errands.report',compact('pendingErrands', 'completedErrands'));
+        return view('errands.report', compact('pendingErrands', 'completedErrands'));
+    }
+
+    /**
+     * Update the status of the specified resource.
+     */
+    public function updateStatus(Request $request, Errand $errand) // Use Errand parameter for route model binding
+    {
+        // Validate the incoming request
+        $request->validate([
+            'status' => 'required|in:in_progress,completed', // Ensure the status is valid
+        ]);
+    
+        // Update the status
+        $errand->status = $request->input('status');
+        $errand->save();
+    
+        // Redirect back to the show route using the 'errand' parameter
+        return redirect()->route('errands.show', ['errand' => $errand->id]) // Use 'errand' here
+                         ->with('success', 'Errand status updated successfully!');
+    }
 }
-}
+    
+

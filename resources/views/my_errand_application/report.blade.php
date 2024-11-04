@@ -3,6 +3,7 @@
 
     <div class="mb-4">
         <h2 class="text-lg font-semibold">Errand Applications Report</h2>
+        <br>
         <a href="{{ route('my-errand-applications.download') }}" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Download Report</a>
     </div>
 

@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function() {
 
     // Errands
     Route::resource('errands', ErrandController::class)->only(['index', 'show']);
-
+    Route::post('/errands/{errand}/status', [ErrandController::class, 'updateStatus'])->name('errands.updateStatus');
     // Errand Applications
     Route::resource('errands.application', ErrandApplicationController::class)->only(['create', 'store']);
 
@@ -52,4 +52,5 @@ Route::middleware('auth')->group(function() {
     ]);
     Route::get('/errand-applications/report', [ErrandStatusController::class, 'report'])->name('my-errand-applications.report');
     Route::get('/my-errand-applications/download', [ErrandApplicationController::class, 'download'])->name('my-errand-applications.download');
+  
 });
