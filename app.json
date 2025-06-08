@@ -1,0 +1,109 @@
+{
+  "name": "Errands Management System",
+  "description": "A modern errands management system built with Laravel",
+  "keywords": ["laravel", "errands", "management", "php"],
+  "website": "https://github.com/your-username/errands-management",
+  "repository": "https://github.com/your-username/errands-management",
+  "logo": "https://laravel.com/img/logomark.min.svg",
+  "success_url": "/",
+  "env": {
+    "APP_NAME": {
+      "description": "Application name",
+      "value": "Errands Management System"
+    },
+    "APP_ENV": {
+      "description": "Application environment",
+      "value": "production"
+    },
+    "APP_KEY": {
+      "description": "Application encryption key",
+      "generator": "secret"
+    },
+    "APP_DEBUG": {
+      "description": "Enable debug mode",
+      "value": "false"
+    },
+    "APP_URL": {
+      "description": "Application URL",
+      "required": true
+    },
+    "DB_CONNECTION": {
+      "description": "Database connection type",
+      "value": "pgsql"
+    },
+    "DB_HOST": {
+      "description": "Database host"
+    },
+    "DB_PORT": {
+      "description": "Database port",
+      "value": "5432"
+    },
+    "DB_DATABASE": {
+      "description": "Database name"
+    },
+    "DB_USERNAME": {
+      "description": "Database username"
+    },
+    "DB_PASSWORD": {
+      "description": "Database password"
+    },
+    "MAIL_MAILER": {
+      "description": "Mail driver",
+      "value": "smtp"
+    },
+    "MAIL_HOST": {
+      "description": "Mail host"
+    },
+    "MAIL_PORT": {
+      "description": "Mail port",
+      "value": "587"
+    },
+    "MAIL_USERNAME": {
+      "description": "Mail username"
+    },
+    "MAIL_PASSWORD": {
+      "description": "Mail password"
+    },
+    "MAIL_ENCRYPTION": {
+      "description": "Mail encryption",
+      "value": "tls"
+    },
+    "MAIL_FROM_ADDRESS": {
+      "description": "Mail from address"
+    },
+    "MAIL_FROM_NAME": {
+      "description": "Mail from name",
+      "value": "Errands Management System"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    },
+    "worker": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "addons": [
+    "heroku-postgresql:essential-0",
+    "heroku-redis:mini"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/php"
+    },
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "environments": {
+    "test": {
+      "addons": ["heroku-postgresql:essential-0"],
+      "env": {
+        "APP_ENV": "testing"
+      }
+    }
+  }
+}

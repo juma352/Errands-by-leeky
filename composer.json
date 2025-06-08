@@ -1,12 +1,13 @@
 {
     "name": "laravel/laravel",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "Modern errands management system built with Laravel",
+    "keywords": ["laravel", "framework", "errands", "management"],
     "license": "MIT",
     "require": {
         "php": "^8.2",
         "laravel/framework": "^11.9",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9"
     },
     "require-dev": {
@@ -45,6 +46,15 @@
             "@php artisan key:generate --ansi",
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi"
+        ],
+        "post-install-cmd": [
+            "php artisan clear-compiled",
+            "chmod -R 755 bootstrap/cache",
+            "php artisan package:discover"
+        ],
+        "compile": [
+            "@php artisan view:cache",
+            "@php artisan config:cache"
         ]
     },
     "extra": {
