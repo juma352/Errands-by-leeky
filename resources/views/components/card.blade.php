@@ -1,3 +1,3 @@
-<article {{ $attributes->class(['rounded-md border-slate-300 bg-white p-4 shadow-sm']) }}>
+<div {{ $attributes->class(['bg-white/80 backdrop-blur-sm rounded-xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 p-6']) }}>
     {{ $slot }}
-</article>
+</div>
